@@ -48,6 +48,6 @@ export default {
   right: 0;
   bottom: 0;
   overflow-y: auto;
-  background-color: red;
+  background-color: #fff;
 }
 </style>

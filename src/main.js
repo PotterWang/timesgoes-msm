@@ -8,6 +8,9 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 
+//导入权限文件
+import "./permission.js";
+
 //配置使用插件
 Vue.use(ElementUI);
 
