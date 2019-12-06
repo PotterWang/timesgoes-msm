@@ -56,6 +56,8 @@
         <el-button @click="resetForm('searchForm')">重置</el-button>
       </el-form-item>
     </el-form>
+
+    <!-- 表格主体 -->
     <el-table :data="memberlist" height="400" border style="width: 100%">
       <!-- type="index"显示索引值 -->
       <el-table-column type="index" label="序号"> </el-table-column>
@@ -88,6 +90,7 @@
       </el-table-column>
     </el-table>
 
+    <!-- 表格底部分页功能 -->
     <div class="block">
       <!-- <span class="demonstration">完整功能</span> -->
       <el-pagination
@@ -327,8 +330,8 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           memberapi.updateMember(this.form_add).then(response => {
-            console.log(response.data);
             const resp = response.data;
+            console.log(resp);
             if (resp.flag) {
               //成功
               this.searchOne();
