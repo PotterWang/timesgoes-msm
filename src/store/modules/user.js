@@ -5,7 +5,7 @@ import {
   setUser,
   removeToken
 } from "@/utils/auth";
-import { login, getUserInfo, logout } from "@/api/login";
+import { login, getUserInfo, logout } from "@/api/login.js";
 
 const user = {
   state: {
@@ -27,7 +27,7 @@ const user = {
     Login({ commit }, form) {
       //promise
       return new Promise((resolve, reject) => {
-        login(form.username.trim(), this.form.password)
+        login(form.username.trim(), form.password)
           .then(response => {
             const resp = response.data;
             commit("SET_TOKEN", resp.data.token);
@@ -62,7 +62,6 @@ const user = {
             commit("SET_TOKEN", "");
             commit("SET_USER", "");
             removeToken();
-
             resolve(respUser);
           })
           .catch(error => {

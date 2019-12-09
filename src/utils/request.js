@@ -75,7 +75,7 @@ axios.interceptors.response.use(
     //看具体code码
     console.log(error.response.status);
     Message({
-      message: error.message,
+      message: error.message || "500",
       type: "error",
       duration: 5000
     });

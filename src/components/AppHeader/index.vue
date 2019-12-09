@@ -126,6 +126,7 @@ export default {
       this.$store.dispatch("Logout").then(response => {
         if (response.flag) {
           //成功
+          this.$message("退出系统");
           this.$router.push("/login");
         } else {
           this.$message({

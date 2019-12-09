@@ -7,7 +7,7 @@ export function getToken() {
 }
 
 export function setToken(token) {
-  return localStorage.setItem(TOKEN_KEY, token);
+  localStorage.setItem(TOKEN_KEY, token);
 }
 
 export function getUser() {
@@ -15,7 +15,7 @@ export function getUser() {
 }
 
 export function setUser(user) {
-  return localStorage.setItem(USER_KEY, JSON.stringify(user));
+  localStorage.setItem(USER_KEY, JSON.stringify(user));
 }
 
 export function removeToken() {

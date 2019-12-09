@@ -48,16 +48,16 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
+          console.log(this.form);
           this.$store
             .dispatch("Login", this.form)
             .then(response => {
-              const resp = response.data;
-              if (resp.flag) {
+              if (response.flag) {
                 //成功,此处不getUserInfo了, 路由拦截已经重新加载了用户信息
                 this.$router.push("/");
               } else {
                 this.$message({
-                  message: resp.message,
+                  message: response.message || "系统异常",
                   type: "warning"
                 });
               }
