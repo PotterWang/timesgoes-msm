@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import { logout } from "@/api/login.js";
+// import { logout } from "@/api/login.js";
 import passwordapi from "@/api/password.js";
 export default {
   data() {
@@ -84,7 +84,8 @@ export default {
       }
     };
     return {
-      user: JSON.parse(localStorage.getItem("timegoes-msm-user")),
+      // user: JSON.parse(localStorage.getItem("timegoes-msm-user")),
+      user: this.$store.state.user.user,
       title: "时光屋会员管理系统",
       dialogForm: false,
       rules: {
@@ -121,26 +122,37 @@ export default {
       }
     },
     handleLogout() {
-      var tokename = localStorage.getItem("timegoes-msm-token");
-      logout(tokename).then(response => {
-        const resp = response.data;
-        //
-        if (resp.flag) {
-          localStorage.removeItem("timegoes-msm-token");
-          localStorage.removeItem("timegoes-msm-user");
-
-          this.$message("退出系统");
-          //前往登录页
+      // var tokename = localStorage.getItem("timegoes-msm-token");
+      this.$store.dispatch("Logout").then(response => {
+        if (response.flag) {
+          //成功
           this.$router.push("/login");
         } else {
           this.$message({
-            message: resp.message,
-            type: "warning",
-            duration: 500 //停留时间
+            message: response.message,
+            type: "warning"
           });
         }
-        this.$message("退出系统");
       });
+      // logout(tokename).then(response => {
+      //   const resp = response.data;
+      //   //
+      //   if (resp.flag) {
+      //     localStorage.removeItem("timegoes-msm-token");
+      //     localStorage.removeItem("timegoes-msm-user");
+
+      //     this.$message("退出系统");
+      //     //前往登录页
+      //     this.$router.push("/login");
+      //   } else {
+      //     this.$message({
+      //       message: resp.message,
+      //       type: "warning",
+      //       duration: 500 //停留时间
+      //     });
+      //   }
+      //   this.$message("退出系统");
+      // });
     },
     validateOldPass() {},
     validatePass() {},

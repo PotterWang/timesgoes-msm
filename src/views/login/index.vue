@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { login, getUserInfo } from "@/api/login.js";
+// import { login, getUserInfo } from "@/api/login.js";
 
 export default {
   data() {
@@ -48,37 +48,54 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          login(this.form.username, this.form.password).then(response => {
-            console.log(response.data);
-            const resp = response.data;
-            if (resp.flag) {
-              getUserInfo(resp.data.token).then(response => {
-                console.log(response.data);
+          this.$store
+            .dispatch("Login", this.form)
+            .then(response => {
+              const resp = response.data;
+              if (resp.flag) {
+                //成功,此处不getUserInfo了, 路由拦截已经重新加载了用户信息
+                this.$router.push("/");
+              } else {
+                this.$message({
+                  message: resp.message,
+                  type: "warning"
+                });
+              }
+            })
+            .catch(error => {
+              //这里不校验了，路由拦截里有校验
+              console.log(error);
+            });
 
-                const respUser = response.data;
-                if (respUser.flag) {
-                  localStorage.setItem(
-                    "timegoes-msm-user",
-                    JSON.stringify(respUser.data)
-                  );
-                  localStorage.setItem("timegoes-msm-token", resp.data.token);
-                  //前往首页
-
-                  this.$router.push("/");
-                } else {
-                  this.$message({
-                    message: respUser.message,
-                    type: "warning"
-                  });
-                }
-              });
-            } else {
-              this.$message({
-                message: resp.message,
-                type: "warning"
-              });
-            }
-          });
+          // login(this.form.username, this.form.password).then(response => {
+          //   console.log(response.data);
+          //   const resp = response.data;
+          //   if (resp.flag) {
+          //     getUserInfo(resp.data.token).then(response => {
+          //       console.log(response.data);
+          //       const respUser = response.data;
+          //       if (respUser.flag) {
+          //         localStorage.setItem(
+          //           "timegoes-msm-user",
+          //           JSON.stringify(respUser.data)
+          //         );
+          //         localStorage.setItem("timegoes-msm-token", resp.data.token);
+          //         //前往首页
+          //         this.$router.push("/");
+          //       } else {
+          //         this.$message({
+          //           message: respUser.message,
+          //           type: "warning"
+          //         });
+          //       }
+          //     });
+          //   } else {
+          //     this.$message({
+          //       message: resp.message,
+          //       type: "warning"
+          //     });
+          //   }
+          // });
           // alert("submit!");
         } else {
           console.log("error submit!!");
